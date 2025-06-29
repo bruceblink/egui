@@ -216,10 +216,54 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4b46cbb362ab8752921c97e041f5e366ee6297bd428a31275b9fcf1e380f7299"
 
 [[package]]
+name = "anstream"
+version = "0.6.19"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "301af1932e46185686725e0fad2f8f2aa7da69dd70bf6ecc44d6b703844a3933"
+dependencies = [
+ "anstyle",
+ "anstyle-parse",
+ "anstyle-query",
+ "anstyle-wincon",
+ "colorchoice",
+ "is_terminal_polyfill",
+ "utf8parse",
+]
+
+[[package]]
 name = "anstyle"
 version = "1.0.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8365de52b16c035ff4fcafe0092ba9390540e3e352870ac09933bebcaa2c8c56"
+
+[[package]]
+name = "anstyle-parse"
+version = "0.2.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4e7644824f0aa2c7b9384579234ef10eb7efb6a0deb83f9630a49594dd9c15c2"
+dependencies = [
+ "utf8parse",
+]
+
+[[package]]
+name = "anstyle-query"
+version = "1.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6c8bdeb6047d8983be085bab0ba1472e6dc604e7041dbf6fcd5e71523014fae9"
+dependencies = [
+ "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "anstyle-wincon"
+version = "3.0.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "403f75924867bb1033c59fbf0797484329750cfbe3c4325cd33127941fabc882"
+dependencies = [
+ "anstyle",
+ "once_cell_polyfill",
+ "windows-sys 0.59.0",
+]
 
 [[package]]
 name = "anyhow"
@@ -849,6 +893,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b"
 
 [[package]]
+name = "colorchoice"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b05b61dc5112cbb17e4b6cd61790d9845d13888356391624cbe7e41efeac1e75"
+
+[[package]]
 name = "colored"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -882,7 +932,7 @@ name = "confirm_exit"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -1040,7 +1090,7 @@ name = "custom_3d_glow"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -1048,7 +1098,7 @@ name = "custom_font"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -1056,7 +1106,7 @@ name = "custom_font_style"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -1065,7 +1115,7 @@ version = "0.1.0"
 dependencies = [
  "eframe",
  "egui_extras",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -1075,8 +1125,7 @@ dependencies = [
  "eframe",
  "egui_demo_lib",
  "egui_extras",
- "env_logger",
- "image",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -1084,7 +1133,7 @@ name = "custom_window_frame"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -1318,7 +1367,7 @@ dependencies = [
  "egui_extras",
  "egui_kittest",
  "ehttp",
- "env_logger",
+ "env_logger 0.10.2",
  "image",
  "log",
  "mimalloc",
@@ -1534,6 +1583,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "env_logger"
+version = "0.11.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "13c863f0904021b108aa8b2f55046443e6b1ebde8fd4a15c399893aae4fa069f"
+dependencies = [
+ "anstream",
+ "anstyle",
+ "env_filter",
+ "jiff",
+ "log",
+]
+
+[[package]]
 name = "epaint"
 version = "0.31.1"
 dependencies = [
@@ -1608,7 +1670,7 @@ name = "external_eventloop"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
  "winit",
 ]
 
@@ -1617,7 +1679,7 @@ name = "external_eventloop_async"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
  "log",
  "tokio",
  "winit",
@@ -1653,7 +1715,7 @@ name = "file_dialog"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
  "rfd",
 ]
 
@@ -2052,7 +2114,7 @@ version = "0.1.0"
 dependencies = [
  "eframe",
  "egui_extras",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -2060,7 +2122,7 @@ name = "hello_world_par"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
  "winit",
 ]
 
@@ -2069,7 +2131,7 @@ name = "hello_world_simple"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -2301,7 +2363,7 @@ version = "0.1.0"
 dependencies = [
  "eframe",
  "egui_extras",
- "env_logger",
+ "env_logger 0.10.2",
  "image",
 ]
 
@@ -2333,6 +2395,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "is_terminal_polyfill"
+version = "1.70.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7943c866cc5cd64cbc25b2e01621d07fa8eb2a1a23160ee81ce38704e97b8ecf"
+
+[[package]]
 name = "itertools"
 version = "0.10.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2346,6 +2414,30 @@ name = "itoa"
 version = "1.0.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49f1f14873335454500d59611f1cf4a4b0f786f9ac11f4312a78e4cf2566695b"
+
+[[package]]
+name = "jiff"
+version = "0.2.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "be1f93b8b1eb69c77f24bbb0afdf66f54b632ee39af40ca21c4365a1d7347e49"
+dependencies = [
+ "jiff-static",
+ "log",
+ "portable-atomic",
+ "portable-atomic-util",
+ "serde",
+]
+
+[[package]]
+name = "jiff-static"
+version = "0.2.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "03343451ff899767262ec32146f6d559dd759fdadf42ff0e227c7c48f72594b4"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "jni"
@@ -2399,7 +2491,7 @@ name = "keyboard_events"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -2639,7 +2731,7 @@ name = "multiple_viewports"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -3032,6 +3124,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "42f5e15c9953c5e4ccceeb2e7382a716482c34515315f7b03532b8b4e8393d2d"
 
 [[package]]
+name = "once_cell_polyfill"
+version = "1.70.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a4895175b425cb1f87721b59f0f286c2092bd4af812243672510e1ac53e2e0ad"
+
+[[package]]
 name = "oorandom"
 version = "11.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3238,7 +3336,7 @@ name = "popups"
 version = "0.31.1"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -3246,6 +3344,15 @@ name = "portable-atomic"
 version = "1.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "350e9b48cbc6b0e028b0473b114454c6316e57336ee184ceab6e53f72c178b3e"
+
+[[package]]
+name = "portable-atomic-util"
+version = "0.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d8a2f0d8d040d7848a709caf78912debcc3f33ee4b3cac47d73d1e1069e83507"
+dependencies = [
+ "portable-atomic",
+]
 
 [[package]]
 name = "powerfmt"
@@ -3341,7 +3448,7 @@ name = "puffin_profiler"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
  "log",
  "profiling",
  "puffin",
@@ -3375,9 +3482,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.37"
+version = "1.0.40"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b5b9d34b8991d19d98081b46eacdd8eb58c6f2b201139f7c5f643cc155a633af"
+checksum = "1885c039570dc00dcb4ff087a89e185fd56bae234ddc7f056a945bf36467248d"
 dependencies = [
  "proc-macro2",
 ]
@@ -3707,7 +3814,7 @@ name = "screenshot"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
  "image",
 ]
 
@@ -3772,7 +3879,7 @@ name = "serial_windows"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
  "log",
 ]
 
@@ -3981,9 +4088,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.96"
+version = "2.0.104"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d5d0adab1ae378d7f53bdebc67a39f1f151407ef230f0ce2883572f5d8985c80"
+checksum = "17b6f705963418cdb9927482fa304bc562ece2fdd4f616084c50b7023b435a40"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4058,7 +4165,7 @@ name = "test_inline_glow_paint"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -4066,7 +4173,7 @@ name = "test_size_pass"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -4075,7 +4182,7 @@ version = "0.1.0"
 dependencies = [
  "eframe",
  "egui_extras",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -4083,7 +4190,7 @@ name = "test_viewports"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -4431,7 +4538,7 @@ name = "user_attention"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger",
+ "env_logger 0.10.2",
 ]
 
 [[package]]
@@ -4472,6 +4579,12 @@ name = "utf8_iter"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b6c140620e7ffbb22c2dee59cafe6084a59b5ffc27a8859a5f0d494b5d52b6be"
+
+[[package]]
+name = "utf8parse"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "06abde3611657adf66d383f00b093d7faecc7fa57071cce2578660c9f1010821"
 
 [[package]]
 name = "version_check"
