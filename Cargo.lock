@@ -932,7 +932,7 @@ name = "confirm_exit"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -1090,7 +1090,7 @@ name = "custom_3d_glow"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -1098,7 +1098,7 @@ name = "custom_font"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -1106,7 +1106,7 @@ name = "custom_font_style"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -1115,7 +1115,7 @@ version = "0.1.0"
 dependencies = [
  "eframe",
  "egui_extras",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -1133,7 +1133,7 @@ name = "custom_window_frame"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -1670,7 +1670,7 @@ name = "external_eventloop"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
  "winit",
 ]
 
@@ -1679,7 +1679,7 @@ name = "external_eventloop_async"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
  "log",
  "tokio",
  "winit",
@@ -1715,7 +1715,7 @@ name = "file_dialog"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
  "rfd",
 ]
 
@@ -2114,7 +2114,7 @@ version = "0.1.0"
 dependencies = [
  "eframe",
  "egui_extras",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -2122,7 +2122,7 @@ name = "hello_world_par"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
  "winit",
 ]
 
@@ -2131,7 +2131,7 @@ name = "hello_world_simple"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -2363,7 +2363,7 @@ version = "0.1.0"
 dependencies = [
  "eframe",
  "egui_extras",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
  "image",
 ]
 
@@ -2491,7 +2491,7 @@ name = "keyboard_events"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -2731,7 +2731,7 @@ name = "multiple_viewports"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -3336,7 +3336,7 @@ name = "popups"
 version = "0.31.1"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
@@ -3448,7 +3448,7 @@ name = "puffin_profiler"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
  "log",
  "profiling",
  "puffin",
@@ -3814,7 +3814,7 @@ name = "screenshot"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
  "image",
 ]
 
@@ -3879,7 +3879,7 @@ name = "serial_windows"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
  "log",
 ]
 
@@ -4538,7 +4538,7 @@ name = "user_attention"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "env_logger 0.10.2",
+ "env_logger 0.11.8",
 ]
 
 [[package]]
