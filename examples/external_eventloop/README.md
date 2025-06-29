@@ -5,3 +5,4 @@ This allows you to run your eframe application alongside other windows and/or to
 ```sh
 cargo run -p external_eventloop
 ```
+![](screenshot.png)
