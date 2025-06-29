@@ -5,3 +5,4 @@ cargo run -p multiple_viewports
 ```
 
 For a more advanced example, see [../../tests/test_viewports].
+![](screenshot.png)
