@@ -261,21 +261,6 @@ impl WrapApp {
 }
 
 impl eframe::App for WrapApp {
-    #[cfg(feature = "persistence")]
-    fn save(&mut self, storage: &mut dyn eframe::Storage) {
-        eframe::set_value(storage, eframe::APP_KEY, &self.state);
-    }
-
-    fn clear_color(&self, visuals: &egui::Visuals) -> [f32; 4] {
-        // Give the area behind the floating windows a different color, because it looks better:
-        let color = egui::lerp(
-            egui::Rgba::from(visuals.panel_fill)..=egui::Rgba::from(visuals.extreme_bg_color),
-            0.5,
-        );
-        let color = egui::Color32::from(color);
-        color.to_normalized_gamma_f32()
-    }
-
     fn update(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
         #[cfg(target_arch = "wasm32")]
         if let Some(anchor) = frame
@@ -320,6 +305,16 @@ impl eframe::App for WrapApp {
         self.run_cmd(ctx, cmd);
     }
 
+    #[cfg(target_arch = "wasm32")]
+    fn as_any_mut(&mut self) -> Option<&mut dyn Any> {
+        Some(&mut *self)
+    }
+
+    #[cfg(feature = "persistence")]
+    fn save(&mut self, storage: &mut dyn eframe::Storage) {
+        eframe::set_value(storage, eframe::APP_KEY, &self.state);
+    }
+
     #[cfg(feature = "glow")]
     fn on_exit(&mut self, gl: Option<&glow::Context>) {
         if let Some(custom3d) = &mut self.custom3d {
@@ -327,9 +322,14 @@ impl eframe::App for WrapApp {
         }
     }
 
-    #[cfg(target_arch = "wasm32")]
-    fn as_any_mut(&mut self) -> Option<&mut dyn Any> {
-        Some(&mut *self)
+    fn clear_color(&self, visuals: &egui::Visuals) -> [f32; 4] {
+        // Give the area behind the floating windows a different color, because it looks better:
+        let color = egui::lerp(
+            egui::Rgba::from(visuals.panel_fill)..=egui::Rgba::from(visuals.extreme_bg_color),
+            0.5,
+        );
+        let color = egui::Color32::from(color);
+        color.to_normalized_gamma_f32()
     }
 }
 
