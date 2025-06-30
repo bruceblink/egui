@@ -5,6 +5,8 @@ use eframe::glow;
 
 #[cfg(target_arch = "wasm32")]
 use core::any::Any;
+use std::sync::Arc;
+use egui::{FontDefinitions, FontFamily};
 
 #[derive(Default)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
@@ -187,7 +189,9 @@ impl WrapApp {
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         // This gives us image support:
         egui_extras::install_image_loaders(&cc.egui_ctx);
-
+        // This gives us display chinese char support:
+        set_chinese_font(&cc.egui_ctx);
+        
         #[allow(unused_mut, clippy::allow_attributes)]
         let mut slf = Self {
             state: State::default(),
@@ -537,4 +541,31 @@ fn clock_button(ui: &mut egui::Ui, seconds_since_midnight: f64) -> egui::Respons
     );
 
     ui.button(egui::RichText::new(time).monospace())
+}
+
+/** * Set a custom Chinese font for the application.
+ * This function is called to ensure that the application can display Chinese characters correctly.
+ */
+fn set_chinese_font(ctx: &egui::Context) {
+    let mut fonts = FontDefinitions::default();
+
+    // load custom chinese font
+    fonts.font_data.insert(
+        "simsun_chinese".to_owned(),
+        Arc::from(egui::FontData::from_static(include_bytes!("../fonts/simsun.ttc"))), // 路径根据实际情况调整
+    );
+
+    // 将自定义字体加入到 Proportional 和 Monospace 字体族的最前面
+    fonts
+        .families
+        .get_mut(&FontFamily::Proportional)
+        .unwrap()
+        .insert(0, "simsun_chinese".to_owned());
+    fonts
+        .families
+        .get_mut(&FontFamily::Monospace)
+        .unwrap()
+        .insert(0, "simsun_chinese".to_owned());
+
+    ctx.set_fonts(fonts);
 }
