@@ -11,6 +11,7 @@ use crate::{
     WidgetText,
     ecolor::Color32,
     emath::{Rangef, Rect, Vec2, pos2, vec2},
+    reset_button_with,
 };
 
 /// How to format numbers in e.g. a [`crate::DragValue`].
@@ -952,6 +953,11 @@ pub struct Visuals {
     /// that needs to look different from other interactive stuff.
     pub extreme_bg_color: Color32,
 
+    /// The background color of [`crate::TextEdit`].
+    ///
+    /// Defaults to [`Self::extreme_bg_color`].
+    pub text_edit_bg_color: Option<Color32>,
+
     /// Background color behind code-styled monospaced labels.
     pub code_bg_color: Color32,
 
@@ -1019,6 +1025,9 @@ pub struct Visuals {
 
     /// How to display numeric color values.
     pub numeric_color_space: NumericColorSpace,
+
+    /// How much to modify the alpha of a disabled widget.
+    pub disabled_alpha: f32,
 }
 
 impl Visuals {
@@ -1042,6 +1051,11 @@ impl Visuals {
         self.widgets.active.text_color()
     }
 
+    /// The background color of [`crate::TextEdit`].
+    pub fn text_edit_bg_color(&self) -> Color32 {
+        self.text_edit_bg_color.unwrap_or(self.extreme_bg_color)
+    }
+
     /// Window background color.
     #[inline(always)]
     pub fn window_fill(&self) -> Color32 {
@@ -1054,17 +1068,32 @@ impl Visuals {
     }
 
     /// When fading out things, we fade the colors towards this.
-    // TODO(emilk): replace with an alpha
     #[inline(always)]
+    #[deprecated = "Use disabled_alpha(). Fading is now handled by modifying the alpha channel."]
     pub fn fade_out_to_color(&self) -> Color32 {
         self.widgets.noninteractive.weak_bg_fill
     }
 
-    /// Returned a "grayed out" version of the given color.
+    /// Disabled widgets have their alpha modified by this.
+    #[inline(always)]
+    pub fn disabled_alpha(&self) -> f32 {
+        self.disabled_alpha
+    }
+
+    /// Returns a "disabled" version of the given color.
+    ///
+    /// This function modifies the opcacity of the given color.
+    /// If this is undesirable use [`gray_out`](Self::gray_out).
+    #[inline(always)]
+    pub fn disable(&self, color: Color32) -> Color32 {
+        color.gamma_multiply(self.disabled_alpha())
+    }
+
+    /// Returns a "grayed out" version of the given color.
     #[doc(alias = "grey_out")]
     #[inline(always)]
     pub fn gray_out(&self, color: Color32) -> Color32 {
-        crate::ecolor::tint_color_towards(color, self.fade_out_to_color())
+        crate::ecolor::tint_color_towards(color, self.widgets.noninteractive.weak_bg_fill)
     }
 }
 
@@ -1339,6 +1368,7 @@ impl Visuals {
             hyperlink_color: Color32::from_rgb(90, 170, 255),
             faint_bg_color: Color32::from_additive_luminance(5), // visible, but barely so
             extreme_bg_color: Color32::from_gray(10),            // e.g. TextEdit background
+            text_edit_bg_color: None, // use `extreme_bg_color` by default
             code_bg_color: Color32::from_gray(64),
             warn_fg_color: Color32::from_rgb(255, 143, 0), // orange
             error_fg_color: Color32::from_rgb(255, 0, 0),  // red
@@ -1384,6 +1414,7 @@ impl Visuals {
             image_loading_spinners: true,
 
             numeric_color_space: NumericColorSpace::GammaByte,
+            disabled_alpha: 0.5,
         }
     }
 
@@ -1680,11 +1711,11 @@ impl Style {
             ui.end_row();
         });
 
-        ui.collapsing("🔠 Text Styles", |ui| text_styles_ui(ui, text_styles));
+        ui.collapsing("🔠 Text styles", |ui| text_styles_ui(ui, text_styles));
         ui.collapsing("📏 Spacing", |ui| spacing.ui(ui));
         ui.collapsing("☝ Interaction", |ui| interaction.ui(ui));
         ui.collapsing("🎨 Visuals", |ui| visuals.ui(ui));
-        ui.collapsing("🔄 Scroll Animation", |ui| scroll_animation.ui(ui));
+        ui.collapsing("🔄 Scroll animation", |ui| scroll_animation.ui(ui));
 
         #[cfg(debug_assertions)]
         ui.collapsing("🐛 Debug", |ui| debug.ui(ui));
@@ -2022,13 +2053,14 @@ impl WidgetVisuals {
 impl Visuals {
     pub fn ui(&mut self, ui: &mut crate::Ui) {
         let Self {
-            dark_mode: _,
+            dark_mode,
             override_text_color: _,
             widgets,
             selection,
             hyperlink_color,
             faint_bg_color,
             extreme_bg_color,
+            text_edit_bg_color,
             code_bg_color,
             warn_fg_color,
             error_fg_color,
@@ -2063,9 +2095,10 @@ impl Visuals {
             image_loading_spinners,
 
             numeric_color_space,
+            disabled_alpha,
         } = self;
 
-        ui.collapsing("Background Colors", |ui| {
+        ui.collapsing("Background colors", |ui| {
             ui_color(ui, &mut widgets.inactive.weak_bg_fill, "Buttons");
             ui_color(ui, window_fill, "Windows");
             ui_color(ui, panel_fill, "Panels");
@@ -2074,6 +2107,13 @@ impl Visuals {
             );
             ui_color(ui, extreme_bg_color, "Extreme")
                 .on_hover_text("Background of plots and paintings");
+
+            ui_color(
+                ui,
+                text_edit_bg_color.get_or_insert(*extreme_bg_color),
+                "TextEdit",
+            )
+            .on_hover_text("Background of TextEdit");
         });
 
         ui.collapsing("Text color", |ui| {
@@ -2191,9 +2231,23 @@ impl Visuals {
                 ui.label("Color picker type");
                 numeric_color_space.toggle_button_ui(ui);
             });
+
+            ui.add(Slider::new(disabled_alpha, 0.0..=1.0).text("Disabled element alpha"));
         });
 
-        ui.vertical_centered(|ui| reset_button(ui, self, "Reset visuals"));
+        let dark_mode = *dark_mode;
+        ui.vertical_centered(|ui| {
+            reset_button_with(
+                ui,
+                self,
+                "Reset visuals",
+                if dark_mode {
+                    Self::dark()
+                } else {
+                    Self::light()
+                },
+            );
+        });
     }
 }
 
